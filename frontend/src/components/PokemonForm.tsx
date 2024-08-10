@@ -18,6 +18,7 @@ export const PokemonForm = () => {
 
   return (
     <Form
+      size="large"
       form={form}
       layout="vertical"
       onFinish={handleSubmit}

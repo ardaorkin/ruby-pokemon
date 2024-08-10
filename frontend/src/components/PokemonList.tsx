@@ -65,6 +65,7 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
   return (
     <div>
       <Input.Search
+        size="large"
         autoFocus
         placeholder="Search Pokemon"
         onChange={handleSearch}
