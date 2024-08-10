@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Alert, Button, Form, Input } from "antd";
+import { Alert, Button, Form, Input, Select } from "antd";
 import { CREATE_POKEMON } from "../graphql/mutations.ts";
 import { GET_POKEMONS } from "../graphql/queries.ts";
 import { CreatePokemonInput } from "../types.ts";
@@ -34,17 +34,51 @@ export const PokemonForm = () => {
           showIcon
         />
       )}
-      <Form.Item label="Name" name="name">
-        <Input />
+      <Form.Item
+        label="Name"
+        name="name"
+        rules={[{ required: true, message: "Name is required" }]}
+      >
+        <Input placeholder="Enter a name" allowClear required />
       </Form.Item>
       <Form.Item label="Powers" name="powers">
-        <Input />
+        <Input placeholder="Separate powers with commas" allowClear />
       </Form.Item>
       <Form.Item label="Kind" name="kind">
-        <Input />
+        <Select
+          allowClear
+          showSearch
+          placeholder="Select a kind"
+          optionFilterProp="children"
+        >
+          {[
+            "fire",
+            "water",
+            "grass",
+            "electric",
+            "normal",
+            "flying",
+            "bug",
+            "poison",
+            "ground",
+            "rock",
+            "fighting",
+            "psychic",
+            "ghost",
+            "ice",
+            "dragon",
+            "dark",
+            "steel",
+            "fairy",
+          ].map((kind) => (
+            <Select.Option key={kind} value={kind}>
+              {kind.charAt(0).toUpperCase() + kind.slice(1)}
+            </Select.Option>
+          ))}
+        </Select>
       </Form.Item>
       <Form.Item label="Image URL" name="imageUrl">
-        <Input />
+        <Input placeholder="Enter an image URL" allowClear type="url" />
       </Form.Item>
       <Form.Item>
         <Button htmlType="submit" loading={mutationLoading}>

@@ -1,4 +1,4 @@
-import { Alert, Button, Form, Input, Modal } from "antd";
+import { Alert, Button, Form, Input, Modal, Select } from "antd";
 import { Pokemon } from "../types";
 import { UPDATE_POKEMON } from "../graphql/mutations";
 import { GET_POKEMONS } from "../graphql/queries";
@@ -45,13 +45,43 @@ export const PokemonEditForm = ({ pokemon, onClose }: PokemonEditFormProps) => {
           />
         )}
         <Form.Item label="Name" name="name">
-          <Input />
+          <Input placeholder="Enter a name" allowClear required />
         </Form.Item>
         <Form.Item label="Powers" name="powers">
-          <Input />
+          <Input placeholder="Separate powers with commas" allowClear />
         </Form.Item>
         <Form.Item label="Kind" name="kind">
-          <Input />
+          <Select
+            allowClear
+            showSearch
+            placeholder="Select a kind"
+            optionFilterProp="children"
+          >
+            {[
+              "fire",
+              "water",
+              "grass",
+              "electric",
+              "normal",
+              "flying",
+              "bug",
+              "poison",
+              "ground",
+              "rock",
+              "fighting",
+              "psychic",
+              "ghost",
+              "ice",
+              "dragon",
+              "dark",
+              "steel",
+              "fairy",
+            ].map((kind) => (
+              <Select.Option key={kind} value={kind}>
+                {kind.charAt(0).toUpperCase() + kind.slice(1)}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item label="Image URL" name="imageUrl">
           <Input />

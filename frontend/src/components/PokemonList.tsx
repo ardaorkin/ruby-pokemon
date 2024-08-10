@@ -65,6 +65,7 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
   return (
     <div>
       <Input.Search
+        autoFocus
         placeholder="Search Pokemon"
         onChange={handleSearch}
         style={{
@@ -118,7 +119,8 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
           >
             <div className="pokemon-details">
               <div>
-                <Typography.Text strong>Kind:</Typography.Text> {pokemon.kind}
+                <Typography.Text strong>Kind:</Typography.Text>{" "}
+                {pokemon.kind.charAt(0).toUpperCase() + pokemon.kind.slice(1)}
               </div>
               <List
                 style={{ overflow: "scroll" }}
