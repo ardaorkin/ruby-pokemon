@@ -5,6 +5,7 @@ import { GET_POKEMONS } from "../graphql/queries.ts";
 import { CreatePokemonInput } from "../types.ts";
 
 export const PokemonForm = () => {
+  const [form] = Form.useForm();
   const [createPokemon, { loading: mutationLoading, error: mutationError }] =
     useMutation(CREATE_POKEMON, {
       refetchQueries: [{ query: GET_POKEMONS }],
@@ -12,10 +13,12 @@ export const PokemonForm = () => {
 
   const handleSubmit = (values: CreatePokemonInput) => {
     createPokemon({ variables: { input: values } });
+    form.resetFields();
   };
 
   return (
     <Form
+      form={form}
       layout="vertical"
       onFinish={handleSubmit}
       labelCol={{ span: 8 }}
