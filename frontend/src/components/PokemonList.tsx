@@ -4,6 +4,7 @@ import {
   Avatar,
   Button,
   Card,
+  Input,
   List,
   Popconfirm,
   Spin,
@@ -43,6 +44,14 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
     deletePokemon({ variables: { input: { id } } });
   };
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = event.target.value;
+    const filteredPokemon = data.pokemons.filter((pokemon: Pokemon) =>
+      pokemon.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setPokemonList(filteredPokemon);
+  };
+
   if (loading) return <Spin />;
   if (error)
     return (
@@ -54,61 +63,73 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
       />
     );
   return (
-    <div className="pokemon-list">
-      {[...pokemonList].map((pokemon: Pokemon) => (
-        <Card
-          styles={{
-            body: {
-              overflow: "scroll",
-              height: 250,
-            },
-          }}
-          actions={[
-            <Button
-              type="link"
-              onClick={() => onSelectPokemon(pokemon)}
-              style={{ marginRight: "8px" }}
-            >
-              Edit
-            </Button>,
-            <Popconfirm
-              title="Are you sure?"
-              onConfirm={(event) => handleDelete(event, pokemon.id)}
-            >
-              <Button type="link" danger>
-                Delete
-              </Button>
-            </Popconfirm>,
-          ]}
-          cover={
-            <Avatar
-              shape="circle"
-              src={pokemon.imageUrl}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
-              }}
-            />
-          }
-          key={pokemon.id}
-          title={pokemon.name}
-          className="card"
-          hoverable={false}
-        >
-          <div className="pokemon-details">
-            <div>
-              <Typography.Text strong>Kind:</Typography.Text> {pokemon.kind}
+    <div>
+      <Input.Search
+        placeholder="Search Pokemon"
+        onChange={handleSearch}
+        style={{
+          marginBottom: "2rem",
+          width: "50%",
+          maxWidth: 300,
+          minWidth: 200,
+        }}
+      />
+      <div className="pokemon-list">
+        {[...pokemonList].map((pokemon: Pokemon) => (
+          <Card
+            styles={{
+              body: {
+                overflow: "scroll",
+                height: 250,
+              },
+            }}
+            actions={[
+              <Button
+                type="link"
+                onClick={() => onSelectPokemon(pokemon)}
+                style={{ marginRight: "8px" }}
+              >
+                Edit
+              </Button>,
+              <Popconfirm
+                title="Are you sure?"
+                onConfirm={(event) => handleDelete(event, pokemon.id)}
+              >
+                <Button type="link" danger>
+                  Delete
+                </Button>
+              </Popconfirm>,
+            ]}
+            cover={
+              <Avatar
+                shape="circle"
+                src={pokemon.imageUrl}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            }
+            key={pokemon.id}
+            title={pokemon.name}
+            className="card"
+            hoverable={false}
+          >
+            <div className="pokemon-details">
+              <div>
+                <Typography.Text strong>Kind:</Typography.Text> {pokemon.kind}
+              </div>
+              <List
+                style={{ overflow: "scroll" }}
+                header={<strong>Powers</strong>}
+                dataSource={pokemon.powers.split(",")}
+                renderItem={(item) => <List.Item>{item}</List.Item>}
+              />
             </div>
-            <List
-              style={{ overflow: "scroll" }}
-              header={<strong>Powers</strong>}
-              dataSource={pokemon.powers.split(",")}
-              renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-          </div>
-        </Card>
-      ))}
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
