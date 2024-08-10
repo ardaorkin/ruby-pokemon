@@ -4,6 +4,7 @@ import {
   Avatar,
   Button,
   Card,
+  Divider,
   Input,
   List,
   Popconfirm,
@@ -78,12 +79,6 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
       <div className="pokemon-list">
         {[...pokemonList].map((pokemon: Pokemon) => (
           <Card
-            styles={{
-              body: {
-                overflow: "scroll",
-                height: 250,
-              },
-            }}
             actions={[
               <Button
                 type="link"
