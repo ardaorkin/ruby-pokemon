@@ -27,3 +27,7 @@
   height: 160px;
   overflow: scroll;
 }
+
+.logout-btn {
+  float: right;
+}

@@ -31,3 +31,19 @@ export const UPDATE_POKEMON = gql`
     }
   }
 `;
+
+export const CREATE_USER = gql`
+  mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      token
+    }
+  }
+`;
+
+export const LOGIN = gql`
+  mutation Login($input: LoginInput!) {
+    login(input: $input) {
+      token
+    }
+  }
+`;
