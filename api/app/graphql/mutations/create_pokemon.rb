@@ -5,7 +5,7 @@ module Mutations
     argument :powers, String, required: false
     argument :kind, String, required: false
     argument :image_url, String, required: false
-    argument :user_id, ID, required: true
+    argument :user_id, ID, required: false
     # return type from the mutation
     type Types::PokemonType
 

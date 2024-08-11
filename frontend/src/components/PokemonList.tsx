@@ -11,7 +11,7 @@ import {
   Typography,
 } from "antd";
 import { useEffect, useState } from "react";
-import { DELETE_POKEMON } from "../graphql/mutations.ts";
+import { RELEASE_POKEMON } from "../graphql/mutations.ts";
 import { GET_POKEMONS } from "../graphql/queries.ts";
 import { Pokemon } from "../types.ts";
 
@@ -23,7 +23,7 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
   const { data, loading, error } = useQuery(GET_POKEMONS);
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
 
-  const [deletePokemon] = useMutation(DELETE_POKEMON, {
+  const [releasePokemon] = useMutation(RELEASE_POKEMON, {
     refetchQueries: [{ query: GET_POKEMONS }],
   });
 
@@ -41,7 +41,7 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
       event.stopPropagation();
       event.preventDefault();
     }
-    deletePokemon({ variables: { input: { id } } });
+    releasePokemon({ variables: { input: { id } } });
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

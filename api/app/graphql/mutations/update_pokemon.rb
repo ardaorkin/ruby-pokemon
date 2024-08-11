@@ -9,12 +9,16 @@ module Mutations
     type Types::PokemonType
 
     def resolve(id:, name:, kind:, powers:, image_url:)
-      pokemon = Pokemon.find(id)
-      kind = pokemon.kind if kind.nil?
-      powers = pokemon.powers if powers.nil?
-      image_url = pokemon.image_url if image_url.nil?
-      pokemon.update(name:, kind:, powers:, image_url:)
-      pokemon
+      user = context[:current_user]
+      pokemon = user.pokemons.find(id)
+
+      return unless pokemon
+
+      if pokemon.update(name:, kind:, powers:, image_url:)
+        pokemon
+      else
+        GraphQL::ExecutionError.new('Pokemon could not be updated')
+      end
     end
   end
 end

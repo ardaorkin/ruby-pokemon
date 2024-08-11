@@ -12,9 +12,9 @@ export const CREATE_POKEMON = gql`
   }
 `;
 
-export const DELETE_POKEMON = gql`
-  mutation DeletePokemon($input: DeletePokemonInput!) {
-    deletePokemon(input: $input) {
+export const RELEASE_POKEMON = gql`
+  mutation ReleasePokemon($input: ReleasePokemonInput!) {
+    releasePokemon(input: $input) {
       id
     }
   }
