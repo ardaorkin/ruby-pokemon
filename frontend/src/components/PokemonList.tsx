@@ -77,55 +77,64 @@ export const PokemonList = ({ onSelectPokemon }: PokemonListProps) => {
         }}
       />
       <div className="pokemon-list">
-        {[...pokemonList].map((pokemon: Pokemon) => (
-          <Card
-            actions={[
-              <Button
-                type="link"
-                onClick={() => onSelectPokemon(pokemon)}
-                style={{ marginRight: "8px" }}
-              >
-                Edit
-              </Button>,
-              <Popconfirm
-                title="Are you sure?"
-                onConfirm={(event) => handleDelete(event, pokemon.id)}
-              >
-                <Button type="link" danger>
-                  Delete
-                </Button>
-              </Popconfirm>,
-            ]}
-            cover={
-              <Avatar
-                shape="circle"
-                src={pokemon.imageUrl}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-              />
-            }
-            key={pokemon.id}
-            title={pokemon.name}
-            className="card"
-            hoverable={false}
-          >
-            <div className="pokemon-details">
-              <div>
-                <Typography.Text strong>Kind:</Typography.Text>{" "}
-                {pokemon.kind.charAt(0).toUpperCase() + pokemon.kind.slice(1)}
+        {[...pokemonList].map((pokemon: Pokemon) => {
+          const {
+            id = "",
+            name = "",
+            kind = "",
+            powers = "",
+            imageUrl = "",
+          } = pokemon;
+          return (
+            <Card
+              actions={[
+                <Button
+                  type="link"
+                  onClick={() => onSelectPokemon(pokemon)}
+                  style={{ marginRight: "8px" }}
+                >
+                  Edit
+                </Button>,
+                <Popconfirm
+                  title="Are you sure?"
+                  onConfirm={(event) => handleDelete(event, id)}
+                >
+                  <Button type="link" danger>
+                    Delete
+                  </Button>
+                </Popconfirm>,
+              ]}
+              cover={
+                <Avatar
+                  shape="circle"
+                  src={imageUrl}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              }
+              key={id}
+              title={name}
+              className="card"
+              hoverable={false}
+            >
+              <div className="pokemon-details">
+                <div>
+                  <Typography.Text strong>Kind:</Typography.Text>{" "}
+                  {kind && kind.charAt(0).toUpperCase() + kind.slice(1)}
+                </div>
+                <List
+                  style={{ overflow: "scroll" }}
+                  header={<strong>Powers</strong>}
+                  dataSource={powers ? powers.split(",") : []}
+                  renderItem={(item) => <List.Item>{item}</List.Item>}
+                />
               </div>
-              <List
-                style={{ overflow: "scroll" }}
-                header={<strong>Powers</strong>}
-                dataSource={pokemon.powers.split(",")}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-              />
-            </div>
-          </Card>
-        ))}
+            </Card>
+          );
+        })}
       </div>
     </div>
   );

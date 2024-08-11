@@ -88,6 +88,7 @@ GEM
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    dotenv (3.1.2)
     drb (2.2.1)
     erubi (1.13.0)
     fiber-storage (1.0.0)
@@ -221,6 +222,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   debug
+  dotenv
   graphiql-rails
   graphql (~> 2.3)
   jwt (~> 2.8.2)

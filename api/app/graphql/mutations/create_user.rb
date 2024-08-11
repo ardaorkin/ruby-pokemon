@@ -10,9 +10,10 @@ module Mutations
 
     def resolve(email:, first_name:, last_name:, password:)
       user = User.new(email:, first_name:, last_name:, password:)
+      hmac_secret = Rails.application.secrets.secret_key_base(ENV['SECRET_KEY_BASE'])
 
       if user.save
-        token = JWT.encode({ user_id: user.id }, Rails.application.secrets.secret_key_base, 'HS256')
+        token = JWT.encode({ user_id: user.id }, hmac_secret, 'HS256')
         {
           token:,
           errors: []
